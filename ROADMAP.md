@@ -74,6 +74,7 @@ White-glove, FSC-operated services for customers who need outcomes, not products
 | SOC-as-a-Service | 24/7 detection, triage, and response operated by FSC analysts | Monthly retainer based on scope |
 | Training-as-a-Service | CYROID ranges + FSC instructors, delivered on customer schedule | Per-engagement or annual contract |
 | Consulting & Assessment | Red team, pen test, DOTMLPF-P analysis, capability development | T&M or fixed-price per engagement |
+| IaC for SMBs | Reference architectures, tested modules, migration assistance for small/mid businesses | Per-engagement or subscription to module library |
 
 ### Decision Framework: Which Tier for Each Customer?
 
@@ -87,8 +88,8 @@ Customer needs → FSC runs it          → Tier 4 (Managed Services)
 
 | Quarter | Goal |
 |---------|------|
-| Q1 | Define open core vs. commercial boundary for each product. Publish community editions. |
-| Q2 | Commercial licenses shipping. Begin self-service SaaS pilot (CYROID). Price validation with 3 design partners. |
+| Q1 | Define open core vs. commercial boundary for each product. Publish community editions. Internal IaC adoption — dogfood everything. |
+| Q2 | Commercial licenses shipping. Begin self-service SaaS pilot (CYROID). Price validation with 3 design partners. Publish IaC reference architectures for SMBs. |
 | Q3 | CYROID SaaS live. SOC-in-a-Box commercial license GA. Managed SOC tier operational. Track open core → commercial conversion. |
 | Q4 | SOC-in-a-Box SaaS live. 40% revenue from SaaS + managed. Annual plans and expansion pricing established. |
 
@@ -177,6 +178,12 @@ Customer needs → FSC runs it          → Tier 4 (Managed Services)
   - Information security policy aligned to NIST 800-171 (for CMMC readiness)
   - Document templates and version control standards
 
+- [ ] **Infrastructure as Code: internal adoption**
+  - Define all FSC infrastructure as code (cloud resources, networking, K8s clusters)
+  - Establish IaC standards: module structure, testing, CI/CD pipelines
+  - Dogfood our own products — deploy Secure K8s Core and CYROID via IaC
+  - Document patterns, pitfalls, and reference architectures from our own usage
+
 - [ ] **Brand & marketing foundation**
   - Brand identity: logo, style guide, slide templates, one-pagers
   - Social media presence (LinkedIn, X/Twitter) and content calendar
@@ -259,6 +266,12 @@ Customer needs → FSC runs it          → Tier 4 (Managed Services)
   - Customer onboarding process documentation
   - Proposal/RFP response workflow and templates
   - Quarterly business review cadence established
+
+- [ ] **Infrastructure as Code: productize**
+  - Package IaC modules from Q1 internal use as reusable, tested modules
+  - Publish reference architectures for SMBs (secure K8s, SOC stack, CI/CD)
+  - Create IaC templates for common SMB scenarios (startup, compliance-ready, gov)
+  - Offer IaC consulting: help SMBs adopt infrastructure as code
 
 - [ ] **Infrastructure evaluation: self-hosted vs. SaaS**
   - Assess GitHub/GHCR usage against API rate limits and scaling needs
