@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FSC Roadmap | Fighting Smart Cyber</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --orange: #d29922;
+      --red: #f85149;
+      --purple: #bc8cff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    header p { color: var(--muted); font-size: 1.1rem; }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .pillar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .pillar .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .pillar .label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chart-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-triple {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .chart-box h3 {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .chart-box canvas { max-height: 300px; }
+
+    .timeline {
+      position: relative;
+      margin: 2rem 0;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .quarter {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .quarter::before {
+      content: '';
+      position: absolute;
+      left: -2.35rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--bg);
+    }
+
+    .quarter.active::before { background: var(--accent); }
+
+    .quarter h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quarter h3 span {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .item .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      margin-right: 0.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .tag-product { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+    .tag-business { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+    .tag-training { background: rgba(248, 81, 73, 0.15); color: var(--red); }
+    .tag-compliance { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
+    .tag-ops { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
+
+    .dep-graph {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      overflow-x: auto;
+    }
+
+    .risk-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .risk-table th, .risk-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .risk-table th {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .risk-table tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-high { background: rgba(248, 81, 73, 0.15); color: var(--red); }
+    .badge-med { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
+
+    footer {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .chart-row, .chart-triple, .items { grid-template-columns: 1fr; }
+      .pillars { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Fighting Smart Cyber</h1>
+      <p>12-Month Product &amp; Business Roadmap &mdash; Q1&ndash;Q4 2026</p>
+    </header>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="number">3</div>
+        <div class="label">Products to GA</div>
+      </div>
+      <div class="pillar">
+        <div class="number">$10M</div>
+        <div class="label">Pipeline Target</div>
+      </div>
+      <div class="pillar">
+        <div class="number">3+</div>
+        <div class="label">Gov Contracts</div>
+      </div>
+      <div class="pillar">
+        <div class="number">10+</div>
+        <div class="label">Enterprise Customers</div>
+      </div>
+      <div class="pillar">
+        <div class="number">500+</div>
+        <div class="label">Students Trained</div>
+      </div>
+      <div class="pillar">
+        <div class="number">100+</div>
+        <div class="label">Demos / Year</div>
+      </div>
+    </div>
+
+    <h2>Growth Trajectory</h2>
+    <div class="chart-row">
+      <div class="chart-box">
+        <h3>Sales Pipeline &amp; Deals</h3>
+        <canvas id="pipelineChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Customer Engagement</h3>
+        <canvas id="engagementChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-triple">
+      <div class="chart-box">
+        <h3>Training Pipeline</h3>
+        <canvas id="trainingChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Product Maturity</h3>
+        <canvas id="productChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Roadmap Composition</h3>
+        <canvas id="compositionChart"></canvas>
+      </div>
+    </div>
+
+    <h2>Dependency Graph</h2>
+    <div class="dep-graph">
+      <svg viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
+            markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#58a6ff"/>
+          </marker>
+        </defs>
+
+        <!-- Quarter labels -->
+        <text x="115" y="12" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="600">Q1</text>
+        <text x="355" y="12" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="600">Q2</text>
+        <text x="595" y="12" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="600">Q3</text>
+        <text x="795" y="12" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="600">Q4</text>
+
+        <!-- Secure K8s Core chain -->
+        <rect x="20" y="20" width="190" height="50" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+        <text x="115" y="50" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Secure K8s Core Beta</text>
+
+        <line x1="210" y1="45" x2="260" y2="45" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="260" y="20" width="190" height="50" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+        <text x="355" y="50" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Secure K8s Core GA</text>
+
+        <line x1="450" y1="45" x2="500" y2="45" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="500" y="20" width="190" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+        <text x="595" y="50" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">K8s Core Ecosystem</text>
+
+        <!-- SOC-in-a-Box chain -->
+        <line x1="115" y1="70" x2="115" y2="100" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
+
+        <rect x="20" y="100" width="190" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+        <text x="115" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC Design</text>
+
+        <line x1="210" y1="125" x2="260" y2="125" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="355" y1="70" x2="355" y2="100" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
+
+        <rect x="260" y="100" width="190" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+        <text x="355" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC-in-a-Box Alpha</text>
+
+        <line x1="450" y1="125" x2="500" y2="125" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="500" y="100" width="190" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+        <text x="595" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC-in-a-Box Beta</text>
+
+        <line x1="690" y1="125" x2="710" y2="125" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="710" y="100" width="190" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+        <text x="805" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC GA + SaaS</text>
+
+        <!-- App Bundles chain -->
+        <line x1="355" y1="70" x2="270" y2="180" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
+
+        <rect x="180" y="180" width="190" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="275" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">App Bundles Ship</text>
+
+        <line x1="370" y1="205" x2="420" y2="205" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="420" y="180" width="190" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="515" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Full Catalog</text>
+
+        <!-- CYROID chain -->
+        <rect x="20" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="100" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">CYROID (Live)</text>
+
+        <line x1="180" y1="285" x2="210" y2="285" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="210" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="290" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Self-Service</text>
+
+        <line x1="370" y1="285" x2="400" y2="285" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="400" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="480" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Marketplace</text>
+
+        <line x1="560" y1="285" x2="590" y2="285" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="590" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="670" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">AI + Federation</text>
+
+        <!-- Operations chain -->
+        <rect x="20" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+        <text x="100" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Infra + SOPs</text>
+
+        <line x1="180" y1="365" x2="210" y2="365" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="210" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+        <text x="290" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Marketing + CRM</text>
+
+        <line x1="370" y1="365" x2="400" y2="365" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="400" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+        <text x="480" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Support + SLAs</text>
+
+        <line x1="560" y1="365" x2="590" y2="365" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <rect x="590" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+        <text x="670" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Mature Ops</text>
+      </svg>
+    </div>
+
+    <h2>Quarterly Timeline</h2>
+
+    <div class="timeline">
+      <div class="quarter active">
+        <h3>Q1 2026 &mdash; Foundation <span>(Feb &ndash; Apr)</span></h3>
+        <div class="items">
+          <div class="item"><span class="tag tag-product">Product</span>CYROID enterprise hardening + training mode</div>
+          <div class="item"><span class="tag tag-product">Product</span>Secure K8s Core beta</div>
+          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box architecture &amp; design</div>
+          <div class="item"><span class="tag tag-product">Product</span>App Bundles catalog definition</div>
+          <div class="item"><span class="tag tag-training">Training</span>2 new CYROID-integrated courses</div>
+          <div class="item"><span class="tag tag-training">Training</span>Training content pipeline + scenario library</div>
+          <div class="item"><span class="tag tag-business">Business</span>10 discovery calls / demos target</div>
+          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP 3PAO + CMMC gap analysis</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Corporate email, Git server, Mattermost</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>SOPs, document retention, legal setup</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Brand identity + marketing foundation</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Internal IT security baseline</div>
+        </div>
+      </div>
+
+      <div class="quarter">
+        <h3>Q2 2026 &mdash; Ship &amp; Certify <span>(May &ndash; Jul)</span></h3>
+        <div class="items">
+          <div class="item"><span class="tag tag-product">Product</span>Secure K8s Core GA</div>
+          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box alpha</div>
+          <div class="item"><span class="tag tag-product">Product</span>CYROID self-service pilot</div>
+          <div class="item"><span class="tag tag-product">Product</span>DevSecOps + DFIR bundles ship</div>
+          <div class="item"><span class="tag tag-training">Training</span>LMS launch + 2 more courses</div>
+          <div class="item"><span class="tag tag-business">Business</span>20 demos, 5 proposals, first deals</div>
+          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP Ready designation</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>CRM, advertising, RFP workflow</div>
+        </div>
+      </div>
+
+      <div class="quarter">
+        <h3>Q3 2026 &mdash; Scale <span>(Aug &ndash; Oct)</span></h3>
+        <div class="items">
+          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box beta + managed tier</div>
+          <div class="item"><span class="tag tag-product">Product</span>CYROID marketplace (GovCloud)</div>
+          <div class="item"><span class="tag tag-product">Product</span>Platform convergence (unified mgmt)</div>
+          <div class="item"><span class="tag tag-product">Product</span>Full app bundle catalog</div>
+          <div class="item"><span class="tag tag-training">Training</span>Certification launch (CCRO)</div>
+          <div class="item"><span class="tag tag-business">Business</span>30 demos, $5M pipeline, 5+ customers</div>
+          <div class="item"><span class="tag tag-business">Business</span>2+ gov contracts + IL4/IL5 path</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Support system, SLAs, runbooks</div>
+        </div>
+      </div>
+
+      <div class="quarter">
+        <h3>Q4 2026 &mdash; Compound <span>(Nov &ndash; Jan 2027)</span></h3>
+        <div class="items">
+          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box GA + SaaS tier</div>
+          <div class="item"><span class="tag tag-product">Product</span>CYROID AI adversary sim + federation</div>
+          <div class="item"><span class="tag tag-product">Product</span>K8s Core ecosystem + community edition</div>
+          <div class="item"><span class="tag tag-product">Product</span>Developer platform (APIs, SDKs)</div>
+          <div class="item"><span class="tag tag-training">Training</span>500+ students, 3+ certifications</div>
+          <div class="item"><span class="tag tag-business">Business</span>40 demos, $10M pipeline, 10+ customers</div>
+          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP Authorized</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>2027 strategic planning, mature ops</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Risk Register</h2>
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>Risk</th>
+          <th>Impact</th>
+          <th>Mitigation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>FedRAMP timeline slips</td>
+          <td><span class="badge badge-high">High</span> Blocks gov SaaS deals</td>
+          <td>Pursue agency ATOs in parallel; sell on-prem while waiting</td>
+        </tr>
+        <tr>
+          <td>SOC-in-a-Box scope creep</td>
+          <td><span class="badge badge-high">High</span> Delays GA</td>
+          <td>Strict MVP scope; ship core detection first, analytics later</td>
+        </tr>
+        <tr>
+          <td>Key person dependency</td>
+          <td><span class="badge badge-med">Med</span> Single points of failure</td>
+          <td>Document everything; cross-train; hire ahead of need</td>
+        </tr>
+        <tr>
+          <td>Compliance cost overruns</td>
+          <td><span class="badge badge-med">Med</span> Cash drain</td>
+          <td>Budget 20% buffer; CMMC before FedRAMP</td>
+        </tr>
+        <tr>
+          <td>Commercial market fit</td>
+          <td><span class="badge badge-med">Med</span> Gov platforms don't resonate</td>
+          <td>Validate with 3 commercial design partners first</td>
+        </tr>
+        <tr>
+          <td>Ops overhead underestimated</td>
+          <td><span class="badge badge-med">Med</span> Team burns out on admin</td>
+          <td>Automate early; hire ops support; outsource bookkeeping</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer>
+      Fighting Smart Cyber &mdash; Roadmap last updated 2026-02-13
+    </footer>
+  </div>
+
+  <script>
+    Chart.defaults.color = '#8b949e';
+    Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+
+    const quarters = ['Q1 2026', 'Q2 2026', 'Q3 2026', 'Q4 2026'];
+
+    // Sales Pipeline Chart
+    new Chart(document.getElementById('pipelineChart'), {
+      type: 'bar',
+      data: {
+        labels: quarters,
+        datasets: [
+          {
+            label: 'Gov Contracts (closed)',
+            data: [0, 1, 2, 3],
+            backgroundColor: 'rgba(88, 166, 255, 0.7)',
+            borderColor: '#58a6ff',
+            borderWidth: 1,
+            borderRadius: 4
+          },
+          {
+            label: 'Commercial Customers (closed)',
+            data: [0, 2, 5, 10],
+            backgroundColor: 'rgba(63, 185, 80, 0.7)',
+            borderColor: '#3fb950',
+            borderWidth: 1,
+            borderRadius: 4
+          },
+          {
+            label: 'MSSP Partners',
+            data: [0, 0, 2, 5],
+            backgroundColor: 'rgba(188, 140, 255, 0.7)',
+            borderColor: '#bc8cff',
+            borderWidth: 1,
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } },
+        scales: {
+          x: { grid: { color: '#21262d' } },
+          y: { grid: { color: '#21262d' }, beginAtZero: true }
+        }
+      }
+    });
+
+    // Customer Engagement Chart
+    new Chart(document.getElementById('engagementChart'), {
+      type: 'line',
+      data: {
+        labels: quarters,
+        datasets: [
+          {
+            label: 'Discovery Calls / Demos',
+            data: [10, 20, 30, 40],
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 6,
+            pointBackgroundColor: '#58a6ff'
+          },
+          {
+            label: 'Active Proposals / RFPs',
+            data: [2, 5, 8, 12],
+            borderColor: '#3fb950',
+            backgroundColor: 'rgba(63, 185, 80, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 6,
+            pointBackgroundColor: '#3fb950'
+          },
+          {
+            label: 'Prime Contractor Relationships',
+            data: [1, 2, 3, 5],
+            borderColor: '#d29922',
+            backgroundColor: 'rgba(210, 153, 34, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 6,
+            pointBackgroundColor: '#d29922'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } },
+        scales: {
+          x: { grid: { color: '#21262d' } },
+          y: { grid: { color: '#21262d' }, beginAtZero: true }
+        }
+      }
+    });
+
+    // Training Pipeline Chart
+    new Chart(document.getElementById('trainingChart'), {
+      type: 'line',
+      data: {
+        labels: quarters,
+        datasets: [
+          {
+            label: 'Students Trained',
+            data: [50, 150, 300, 500],
+            borderColor: '#f85149',
+            backgroundColor: 'rgba(248, 81, 73, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointBackgroundColor: '#f85149'
+          },
+          {
+            label: 'Training Engagements',
+            data: [2, 5, 10, 15],
+            borderColor: '#d29922',
+            backgroundColor: 'rgba(210, 153, 34, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointBackgroundColor: '#d29922'
+          },
+          {
+            label: 'Courses Available',
+            data: [5, 7, 9, 9],
+            borderColor: '#bc8cff',
+            backgroundColor: 'rgba(188, 140, 255, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointBackgroundColor: '#bc8cff'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } },
+        scales: {
+          x: { grid: { color: '#21262d' } },
+          y: { grid: { color: '#21262d' }, beginAtZero: true }
+        }
+      }
+    });
+
+    // Product Maturity Chart
+    new Chart(document.getElementById('productChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Secure K8s Core', 'SOC-in-a-Box', 'CYROID', 'App Bundles'],
+        datasets: [
+          { label: 'Q1', data: [25, 10, 60, 10], backgroundColor: 'rgba(88, 166, 255, 0.6)', borderRadius: 2 },
+          { label: 'Q2', data: [50, 20, 15, 25], backgroundColor: 'rgba(63, 185, 80, 0.6)', borderRadius: 2 },
+          { label: 'Q3', data: [15, 35, 15, 40], backgroundColor: 'rgba(210, 153, 34, 0.6)', borderRadius: 2 },
+          { label: 'Q4', data: [10, 35, 10, 25], backgroundColor: 'rgba(188, 140, 255, 0.6)', borderRadius: 2 }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}% of development` } }
+        },
+        scales: {
+          x: { stacked: true, grid: { color: '#21262d' }, max: 100, ticks: { callback: (v) => v + '%' } },
+          y: { stacked: true, grid: { color: '#21262d' } }
+        }
+      }
+    });
+
+    // Roadmap Composition (doughnut)
+    new Chart(document.getElementById('compositionChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Product', 'Training', 'Business', 'Operations', 'Compliance'],
+        datasets: [{
+          data: [16, 8, 10, 8, 4],
+          backgroundColor: [
+            'rgba(88, 166, 255, 0.8)',
+            'rgba(248, 81, 73, 0.8)',
+            'rgba(63, 185, 80, 0.8)',
+            'rgba(188, 140, 255, 0.8)',
+            'rgba(210, 153, 34, 0.8)'
+          ],
+          borderColor: '#161b22',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} items` } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
