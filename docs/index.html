@@ -182,6 +182,61 @@
     .tag-compliance { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
     .tag-ops { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
 
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .model-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      border-top: 3px solid var(--accent);
+    }
+
+    .model-card.tier-1 { border-top-color: var(--muted); }
+    .model-card.tier-2 { border-top-color: var(--accent); }
+    .model-card.tier-3 { border-top-color: var(--green); }
+    .model-card.tier-4 { border-top-color: var(--orange); }
+
+    .model-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .model-card .tier-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .model-card ul {
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .model-card li {
+      padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+    }
+
+    .model-card li:last-child { border-bottom: none; }
+
+    .model-card .pricing {
+      margin-top: 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     .dep-graph {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -233,8 +288,12 @@
     }
 
     @media (max-width: 768px) {
-      .chart-row, .chart-triple, .items { grid-template-columns: 1fr; }
+      .chart-row, .chart-triple, .items, .model-grid { grid-template-columns: 1fr; }
       .pillars { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .model-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -295,6 +354,52 @@
       <div class="chart-box">
         <h3>Roadmap Composition</h3>
         <canvas id="compositionChart"></canvas>
+      </div>
+    </div>
+
+    <h2>Business Model: Open Core + SaaS + Managed Services</h2>
+    <div class="model-grid">
+      <div class="model-card tier-1">
+        <h4>Open Core</h4>
+        <div class="tier-label">Tier 1 &mdash; Community</div>
+        <ul>
+          <li>Secure K8s Core base layer</li>
+          <li>CYROID scenario template format</li>
+          <li>IaC reference architectures</li>
+        </ul>
+        <div class="pricing" style="color: var(--muted);">Free &mdash; drives adoption</div>
+      </div>
+      <div class="model-card tier-2">
+        <h4>Commercial Platform</h4>
+        <div class="tier-label">Tier 2 &mdash; Licensed</div>
+        <ul>
+          <li>K8s Core Pro (compliance, auditing)</li>
+          <li>CYROID Enterprise (RBAC, scoring)</li>
+          <li>SOC-in-a-Box (full SOC stack)</li>
+          <li>App Bundles (curated suites)</li>
+        </ul>
+        <div class="pricing">Annual subscription</div>
+      </div>
+      <div class="model-card tier-3">
+        <h4>SaaS</h4>
+        <div class="tier-label">Tier 3 &mdash; FSC-Hosted</div>
+        <ul>
+          <li>CYROID Cloud (self-service ranges)</li>
+          <li>SOC-in-a-Box Cloud (hosted SOC)</li>
+          <li>Self-service signup + trials</li>
+        </ul>
+        <div class="pricing" style="color: var(--green);">Usage-based + seat subscription</div>
+      </div>
+      <div class="model-card tier-4">
+        <h4>Managed Services</h4>
+        <div class="tier-label">Tier 4 &mdash; FSC-Operated</div>
+        <ul>
+          <li>SOC-as-a-Service (24/7 MDR)</li>
+          <li>Training-as-a-Service</li>
+          <li>IaC consulting for SMBs</li>
+          <li>Red team &amp; assessments</li>
+        </ul>
+        <div class="pricing" style="color: var(--orange);">Monthly retainer / per-engagement</div>
       </div>
     </div>
 
@@ -419,6 +524,7 @@
           <div class="item"><span class="tag tag-ops">Ops</span>SOPs, document retention, legal setup</div>
           <div class="item"><span class="tag tag-ops">Ops</span>Brand identity + marketing foundation</div>
           <div class="item"><span class="tag tag-ops">Ops</span>Internal IT security baseline</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>IaC adoption: define all infra as code</div>
         </div>
       </div>
 
@@ -433,6 +539,8 @@
           <div class="item"><span class="tag tag-business">Business</span>20 demos, 5 proposals, first deals</div>
           <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP Ready designation</div>
           <div class="item"><span class="tag tag-ops">Ops</span>CRM, advertising, RFP workflow</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Evaluate self-hosted vs. SaaS infra</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Publish IaC reference architectures for SMBs</div>
         </div>
       </div>
 
@@ -447,6 +555,8 @@
           <div class="item"><span class="tag tag-business">Business</span>30 demos, $5M pipeline, 5+ customers</div>
           <div class="item"><span class="tag tag-business">Business</span>2+ gov contracts + IL4/IL5 path</div>
           <div class="item"><span class="tag tag-ops">Ops</span>Support system, SLAs, runbooks</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Self-hosted infra migration (if needed)</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>AI ops foundation: internal AI assistant</div>
         </div>
       </div>
 
@@ -461,6 +571,7 @@
           <div class="item"><span class="tag tag-business">Business</span>40 demos, $10M pipeline, 10+ customers</div>
           <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP Authorized</div>
           <div class="item"><span class="tag tag-ops">Ops</span>2027 strategic planning, mature ops</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Self-hosted AI platform for business tasks</div>
         </div>
       </div>
     </div>
