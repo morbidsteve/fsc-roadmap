@@ -24,6 +24,76 @@
 
 ---
 
+## Business Model: Open Core + SaaS + Managed Services
+
+FSC operates a **tiered service model** with clear boundaries between open, commercial, and managed offerings.
+
+### Tier 1: Open Core (Community)
+Free, open-source base layers that drive adoption and build trust.
+
+| Product | What's open | Purpose |
+|---------|------------|---------|
+| Secure K8s Core | Hardened K8s baseline, CIS-aligned configs, basic GitOps | On-ramp for enterprises; proves expertise; community contributions |
+| CYROID | Scenario template format, basic range definition spec | Ecosystem lock-in through community-built scenarios |
+
+**Revenue from open core: $0 (intentional).** Goal is adoption, not direct revenue.
+
+### Tier 2: Commercial Platform (Licensed / Subscription)
+Enterprise features, support, and compliance tooling layered on top of open core.
+
+| Product | Commercial features | Pricing model |
+|---------|-------------------|---------------|
+| Secure K8s Core Pro | Compliance evidence generation, NIST/CMMC mapping, automated auditing, priority support | Annual subscription per cluster |
+| CYROID Enterprise | Multi-tenant RBAC, training mode, scoring engine, LMS integration, GovCloud deployment | Annual subscription per seat or per range |
+| SOC-in-a-Box | Full SOC stack (SIEM + EDR + threat intel), deployment automation, dashboards | Annual subscription per deployment |
+| App Bundles | DevSecOps, DFIR, SOC Stack, Productivity suites — curated and tested on Secure K8s Core | Per-bundle subscription or bundled with platform |
+
+**Revenue targets by tier:**
+
+| Quarter | Open core users | Commercial licenses | Target ARR |
+|---------|----------------|-------------------|------------|
+| Q2 2026 | 50+ | 3 | — |
+| Q3 2026 | 200+ | 8 | $500K |
+| Q4 2026 | 500+ | 15+ | $2M |
+
+### Tier 3: SaaS (FSC-Hosted)
+Fully managed, multi-tenant cloud offerings — customers pay for outcomes, not infrastructure.
+
+| Product | SaaS offering | Pricing model |
+|---------|--------------|---------------|
+| CYROID Cloud | Self-service range provisioning, pay-per-use, hosted scenario marketplace | Usage-based (hours/ranges) + seat subscription |
+| SOC-in-a-Box Cloud | Hosted SOC with dashboards, alerting, compliance reporting | Monthly per-seat + data volume |
+
+**SaaS launches in Q4 2026.** Revenue target: 40% of total revenue from SaaS + managed by end of year.
+
+### Tier 4: Managed Services
+White-glove, FSC-operated services for customers who need outcomes, not products.
+
+| Service | What FSC does | Pricing model |
+|---------|--------------|---------------|
+| SOC-as-a-Service | 24/7 detection, triage, and response operated by FSC analysts | Monthly retainer based on scope |
+| Training-as-a-Service | CYROID ranges + FSC instructors, delivered on customer schedule | Per-engagement or annual contract |
+| Consulting & Assessment | Red team, pen test, DOTMLPF-P analysis, capability development | T&M or fixed-price per engagement |
+
+### Decision Framework: Which Tier for Each Customer?
+
+```
+Customer needs → Does it themselves → Tier 1 (Open Core) or Tier 2 (Commercial)
+Customer needs → FSC hosts it        → Tier 3 (SaaS)
+Customer needs → FSC runs it          → Tier 4 (Managed Services)
+```
+
+### Quarterly SaaS & Model Goals
+
+| Quarter | Goal |
+|---------|------|
+| Q1 | Define open core vs. commercial boundary for each product. Publish community editions. |
+| Q2 | Commercial licenses shipping. Begin self-service SaaS pilot (CYROID). Price validation with 3 design partners. |
+| Q3 | CYROID SaaS live. SOC-in-a-Box commercial license GA. Managed SOC tier operational. Track open core → commercial conversion. |
+| Q4 | SOC-in-a-Box SaaS live. 40% revenue from SaaS + managed. Annual plans and expansion pricing established. |
+
+---
+
 ## Q1 2026 (Feb – Apr) — Foundation
 
 ### Product
