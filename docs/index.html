@@ -32,13 +32,21 @@
 
     header {
       text-align: center;
-      padding: 3rem 0 2rem;
+      padding: 3rem 0 1.5rem;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    header p { color: var(--muted); font-size: 1.1rem; }
+    header p { color: var(--muted); font-size: 1.1rem; margin-bottom: 0.25rem; }
+    header .mission {
+      color: var(--text);
+      font-size: 1rem;
+      font-style: italic;
+      max-width: 700px;
+      margin: 1rem auto 0;
+      opacity: 0.85;
+    }
 
     .pillars {
       display: grid;
@@ -106,6 +114,57 @@
 
     .chart-box canvas { max-height: 300px; }
 
+    /* Strategic position section */
+    .position-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .position-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .position-card h4 {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .position-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+    }
+
+    .comp-table th, .comp-table td {
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comp-table th {
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .comp-table td:last-child { color: var(--green); font-weight: 500; }
+
     .timeline {
       position: relative;
       margin: 2rem 0;
@@ -143,13 +202,20 @@
 
     .quarter h3 {
       font-size: 1.2rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.25rem;
     }
 
     .quarter h3 span {
       font-weight: 400;
       color: var(--muted);
       font-size: 0.9rem;
+    }
+
+    .quarter .focus {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      font-style: italic;
     }
 
     .items {
@@ -184,7 +250,7 @@
 
     .model-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
       margin: 1.5rem 0;
     }
@@ -197,10 +263,11 @@
       border-top: 3px solid var(--accent);
     }
 
-    .model-card.tier-1 { border-top-color: var(--muted); }
-    .model-card.tier-2 { border-top-color: var(--accent); }
-    .model-card.tier-3 { border-top-color: var(--green); }
-    .model-card.tier-4 { border-top-color: var(--orange); }
+    .model-card.stream-training { border-top-color: var(--red); }
+    .model-card.stream-consulting { border-top-color: var(--orange); }
+    .model-card.stream-platform { border-top-color: var(--accent); }
+    .model-card.stream-managed { border-top-color: var(--purple); }
+    .model-card.stream-saas { border-top-color: var(--green); }
 
     .model-card h4 {
       font-size: 0.95rem;
@@ -233,8 +300,47 @@
       padding-top: 0.5rem;
       border-top: 1px solid var(--border);
       font-size: 0.8rem;
-      color: var(--accent);
       font-weight: 600;
+    }
+
+    /* Engagement ladder */
+    .ladder {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .ladder-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .ladder-step:first-child { border-radius: 6px 0 0 6px; }
+    .ladder-step:last-child { border-radius: 0 6px 6px 0; }
+
+    .ladder-step .step-label {
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+    }
+
+    .ladder-step .step-desc {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .ladder-arrow {
+      color: var(--accent);
+      font-size: 1.2rem;
+      padding: 0 0.25rem;
+      flex-shrink: 0;
     }
 
     .dep-graph {
@@ -277,6 +383,7 @@
 
     .badge-high { background: rgba(248, 81, 73, 0.15); color: var(--red); }
     .badge-med { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
+    .badge-low { background: rgba(63, 185, 80, 0.15); color: var(--green); }
 
     footer {
       text-align: center;
@@ -288,12 +395,18 @@
     }
 
     @media (max-width: 768px) {
-      .chart-row, .chart-triple, .items, .model-grid { grid-template-columns: 1fr; }
+      .chart-row, .chart-triple, .items, .model-grid, .position-grid { grid-template-columns: 1fr; }
       .pillars { grid-template-columns: repeat(2, 1fr); }
+      .ladder { flex-direction: column; align-items: stretch; }
+      .ladder-arrow { text-align: center; transform: rotate(90deg); }
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
       .model-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      .model-grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -302,6 +415,7 @@
     <header>
       <h1>Fighting Smart Cyber</h1>
       <p>12-Month Product &amp; Business Roadmap &mdash; Q1&ndash;Q4 2026</p>
+      <div class="mission">Operator-grade cybersecurity platforms and training &mdash; built by operators, for operators.</div>
     </header>
 
     <div class="pillars">
@@ -310,8 +424,12 @@
         <div class="label">Products to GA</div>
       </div>
       <div class="pillar">
-        <div class="number">$10M</div>
-        <div class="label">Pipeline Target</div>
+        <div class="number">$750K&ndash;$1M</div>
+        <div class="label">ARR Target (Q4)</div>
+      </div>
+      <div class="pillar">
+        <div class="number">~10:1</div>
+        <div class="label">Pipeline:Close Ratio</div>
       </div>
       <div class="pillar">
         <div class="number">3+</div>
@@ -323,19 +441,67 @@
       </div>
       <div class="pillar">
         <div class="number">500+</div>
-        <div class="label">Students Trained</div>
-      </div>
-      <div class="pillar">
-        <div class="number">100+</div>
-        <div class="label">Demos / Year</div>
+        <div class="label">Students Trained (YTD)</div>
       </div>
     </div>
 
+    <h2>Strategic Position</h2>
+    <div class="position-grid">
+      <div class="position-card">
+        <h4>Operator-Led, Not Sales-Led</h4>
+        <p>Products designed by people who've executed real-world cyber operations &mdash; not built by engineers guessing at operator needs.</p>
+      </div>
+      <div class="position-card">
+        <h4>TS/SCI-Cleared Leadership</h4>
+        <p>Engage on classified requirements and environments from day one. No waiting for clearances or sponsor access.</p>
+      </div>
+      <div class="position-card">
+        <h4>DOTMLPF-P Framework</h4>
+        <p>Holistic capability assessments that go beyond tools &mdash; doctrine, organization, training, materiel, leadership, personnel, facilities, policy.</p>
+      </div>
+      <div class="position-card">
+        <h4>Full-Stack Delivery</h4>
+        <p>Strategy &rarr; architecture &rarr; implementation &rarr; training &rarr; managed operations. One vendor, no handoffs.</p>
+      </div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Premium Tier</th>
+          <th>Mid-Market</th>
+          <th>FSC Positioning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cyber Ranges</td>
+          <td>SimSpace ($500K+ contracts)</td>
+          <td>Hack The Box, RangeForce</td>
+          <td>Operator-grade fidelity, mid-market pricing ($200&ndash;400/seat/mo)</td>
+        </tr>
+        <tr>
+          <td>MDR / SOC</td>
+          <td>Arctic Wolf, Expel</td>
+          <td>Blumira, Todyl</td>
+          <td>Accreditation-ready, K8s-native, on-prem or FSC-hosted</td>
+        </tr>
+        <tr>
+          <td>K8s Security</td>
+          <td>Aqua Security, Sysdig</td>
+          <td>ARMO (Kubescape)</td>
+          <td>Zero Trust baseline + compliance evidence, not just scanning</td>
+        </tr>
+      </tbody>
+    </table>
+
     <h2>Growth Trajectory</h2>
+    <p style="color: var(--muted); font-size: 0.82rem; margin-bottom: 1rem;">Q1 revenue shows $0 in charts — replace with actual baseline. All engagement and training metrics are labeled as quarterly (activity that quarter) or cumulative (running YTD total). Pipeline:close ratio assumption is ~10:1 gov, ~5:1 commercial.</p>
     <div class="chart-row">
       <div class="chart-box">
-        <h3>Sales Pipeline &amp; Deals</h3>
-        <canvas id="pipelineChart"></canvas>
+        <h3>Revenue by Stream + ARR</h3>
+        <canvas id="revenueChart"></canvas>
       </div>
       <div class="chart-box">
         <h3>Customer Engagement</h3>
@@ -357,55 +523,95 @@
       </div>
     </div>
 
-    <h2>Business Model: Open Core + SaaS + Managed Services</h2>
+    <h2>Go-to-Market Model</h2>
+
     <div class="model-grid">
-      <div class="model-card tier-1">
-        <h4>Open Core</h4>
-        <div class="tier-label">Tier 1 &mdash; Community</div>
+      <div class="model-card stream-training">
+        <h4>Training &amp; Certification</h4>
+        <div class="tier-label">Highest priority &mdash; live now</div>
         <ul>
-          <li>Secure K8s Core base layer</li>
-          <li>CYROID scenario template format</li>
-          <li>IaC reference architectures</li>
+          <li>Instructor-led courses</li>
+          <li>CYROID range access</li>
+          <li>Certification exams</li>
+          <li>LMS on-demand catalog</li>
         </ul>
-        <div class="pricing" style="color: var(--muted);">Free &mdash; drives adoption</div>
+        <div class="pricing" style="color: var(--red);">Per-engagement + annual seat licenses</div>
       </div>
-      <div class="model-card tier-2">
-        <h4>Commercial Platform</h4>
-        <div class="tier-label">Tier 2 &mdash; Licensed</div>
+      <div class="model-card stream-consulting">
+        <h4>Consulting &amp; Assessments</h4>
+        <div class="tier-label">High priority &mdash; active now</div>
         <ul>
-          <li>K8s Core Pro (compliance, auditing)</li>
-          <li>CYROID Enterprise (RBAC, scoring)</li>
-          <li>SOC-in-a-Box (full SOC stack)</li>
-          <li>App Bundles (curated suites)</li>
+          <li>Red team &amp; pen test</li>
+          <li>DOTMLPF-P analysis</li>
+          <li>Zero Trust roadmaps</li>
+          <li>Capability development</li>
         </ul>
-        <div class="pricing">Annual subscription</div>
+        <div class="pricing" style="color: var(--orange);">T&amp;M or fixed-price</div>
       </div>
-      <div class="model-card tier-3">
+      <div class="model-card stream-platform">
+        <h4>Platform Subscriptions</h4>
+        <div class="tier-label">Ships Q2&ndash;Q4</div>
+        <ul>
+          <li>Secure K8s Core Pro</li>
+          <li>CYROID Enterprise</li>
+          <li>SOC-in-a-Box</li>
+          <li>Deployment bundles</li>
+        </ul>
+        <div class="pricing" style="color: var(--accent);">Annual subscription per cluster/seat</div>
+      </div>
+      <div class="model-card stream-managed">
+        <h4>Managed Services</h4>
+        <div class="tier-label">Launches Q3</div>
+        <ul>
+          <li>SOC-as-a-Service (24/7 MDR)</li>
+          <li>Training-as-a-Service</li>
+          <li>FSC-operated infrastructure</li>
+        </ul>
+        <div class="pricing" style="color: var(--purple);">Monthly retainer</div>
+      </div>
+      <div class="model-card stream-saas">
         <h4>SaaS</h4>
-        <div class="tier-label">Tier 3 &mdash; FSC-Hosted</div>
+        <div class="tier-label">Launches Q4</div>
         <ul>
-          <li>CYROID Cloud (self-service ranges)</li>
-          <li>SOC-in-a-Box Cloud (hosted SOC)</li>
+          <li>CYROID Cloud (self-service)</li>
+          <li>SOC-in-a-Box Cloud</li>
           <li>Self-service signup + trials</li>
         </ul>
         <div class="pricing" style="color: var(--green);">Usage-based + seat subscription</div>
       </div>
-      <div class="model-card tier-4">
-        <h4>Managed Services</h4>
-        <div class="tier-label">Tier 4 &mdash; FSC-Operated</div>
-        <ul>
-          <li>SOC-as-a-Service (24/7 MDR)</li>
-          <li>Training-as-a-Service</li>
-          <li>IaC consulting for SMBs</li>
-          <li>Red team &amp; assessments</li>
-        </ul>
-        <div class="pricing" style="color: var(--orange);">Monthly retainer / per-engagement</div>
+    </div>
+
+    <h3 style="color: var(--muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 2rem 0 0.5rem;">Customer Engagement Ladder</h3>
+    <div class="ladder">
+      <div class="ladder-step">
+        <span class="step-label">Discovery Call</span>
+        <span class="step-desc">Identify needs</span>
+      </div>
+      <span class="ladder-arrow">&rarr;</span>
+      <div class="ladder-step">
+        <span class="step-label">Assessment / Training</span>
+        <span class="step-desc">Prove value, build trust</span>
+      </div>
+      <span class="ladder-arrow">&rarr;</span>
+      <div class="ladder-step">
+        <span class="step-label">Platform License</span>
+        <span class="step-desc">Customer deploys FSC</span>
+      </div>
+      <span class="ladder-arrow">&rarr;</span>
+      <div class="ladder-step">
+        <span class="step-label">Managed Services</span>
+        <span class="step-desc">FSC operates</span>
+      </div>
+      <span class="ladder-arrow">&rarr;</span>
+      <div class="ladder-step">
+        <span class="step-label">SaaS</span>
+        <span class="step-desc">FSC-hosted, self-service</span>
       </div>
     </div>
 
     <h2>Dependency Graph</h2>
     <div class="dep-graph">
-      <svg viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
             markerWidth="8" markerHeight="6" orient="auto-start-reverse">
@@ -437,7 +643,7 @@
         <line x1="115" y1="70" x2="115" y2="100" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
 
         <rect x="20" y="100" width="190" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
-        <text x="115" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC Design</text>
+        <text x="115" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC Architecture</text>
 
         <line x1="210" y1="125" x2="260" y2="125" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow)"/>
         <line x1="355" y1="70" x2="355" y2="100" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
@@ -455,54 +661,43 @@
         <rect x="710" y="100" width="190" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
         <text x="805" y="130" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SOC GA + SaaS</text>
 
-        <!-- App Bundles chain -->
-        <line x1="355" y1="70" x2="270" y2="180" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
-
-        <rect x="180" y="180" width="190" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
-        <text x="275" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">App Bundles Ship</text>
-
-        <line x1="370" y1="205" x2="420" y2="205" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-        <rect x="420" y="180" width="190" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
-        <text x="515" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Full Catalog</text>
-
         <!-- CYROID chain -->
-        <rect x="20" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
-        <text x="100" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">CYROID (Live)</text>
+        <rect x="20" y="180" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="100" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">CYROID (Live)</text>
 
-        <line x1="180" y1="285" x2="210" y2="285" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="180" y1="205" x2="210" y2="205" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <rect x="210" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
-        <text x="290" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Self-Service</text>
+        <rect x="210" y="180" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="290" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Self-Service</text>
 
-        <line x1="370" y1="285" x2="400" y2="285" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="370" y1="205" x2="400" y2="205" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <rect x="400" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
-        <text x="480" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Marketplace</text>
+        <rect x="400" y="180" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="480" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Marketplace</text>
 
-        <line x1="560" y1="285" x2="590" y2="285" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="560" y1="205" x2="590" y2="205" stroke="#f85149" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <rect x="590" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
-        <text x="670" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">AI + Federation</text>
+        <rect x="590" y="180" width="160" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+        <text x="670" y="210" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Advanced + AI</text>
 
-        <!-- Operations chain -->
-        <rect x="20" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
-        <text x="100" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Infra + SOPs</text>
+        <!-- Revenue chain -->
+        <rect x="20" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="100" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Training + Consulting</text>
 
-        <line x1="180" y1="365" x2="210" y2="365" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="180" y1="285" x2="210" y2="285" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <rect x="210" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
-        <text x="290" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Marketing + CRM</text>
+        <rect x="210" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="290" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Platform Licenses</text>
 
-        <line x1="370" y1="365" x2="400" y2="365" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="370" y1="285" x2="400" y2="285" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <rect x="400" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
-        <text x="480" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Support + SLAs</text>
+        <rect x="400" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="480" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Managed Services</text>
 
-        <line x1="560" y1="365" x2="590" y2="365" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="560" y1="285" x2="590" y2="285" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-        <rect x="590" y="340" width="160" height="50" rx="6" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
-        <text x="670" y="370" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Mature Ops</text>
+        <rect x="590" y="260" width="160" height="50" rx="6" fill="#161b22" stroke="#d29922" stroke-width="1.5"/>
+        <text x="670" y="290" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">SaaS Revenue</text>
       </svg>
     </div>
 
@@ -511,49 +706,51 @@
     <div class="timeline">
       <div class="quarter active">
         <h3>Q1 2026 &mdash; Foundation <span>(Feb &ndash; Apr)</span></h3>
+        <div class="focus">Stand up operations. Accelerate training revenue. Ship Secure K8s Core beta. Begin government pipeline.</div>
         <div class="items">
           <div class="item"><span class="tag tag-product">Product</span>CYROID enterprise hardening + training mode</div>
-          <div class="item"><span class="tag tag-product">Product</span>Secure K8s Core beta</div>
+          <div class="item"><span class="tag tag-product">Product</span>Secure K8s Core beta (Zero Trust, CIS, GitOps)</div>
           <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box architecture &amp; design</div>
-          <div class="item"><span class="tag tag-product">Product</span>App Bundles catalog definition</div>
           <div class="item"><span class="tag tag-training">Training</span>2 new CYROID-integrated courses</div>
           <div class="item"><span class="tag tag-training">Training</span>Training content pipeline + scenario library</div>
-          <div class="item"><span class="tag tag-business">Business</span>10 discovery calls / demos target</div>
-          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP 3PAO + CMMC gap analysis</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>Corporate email, Git server, Mattermost</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>SOPs, document retention, legal setup</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>Brand identity + marketing foundation</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>Internal IT security baseline</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>IaC adoption: define all infra as code</div>
+          <div class="item"><span class="tag tag-business">Business</span>10 discovery calls / demos</div>
+          <div class="item"><span class="tag tag-business">Business</span>SBA set-aside evaluation (SDVOSB)</div>
+          <div class="item"><span class="tag tag-compliance">Compliance</span>CMMC gap analysis + FedRAMP 20x planning</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Legal, accounting, insurance, comms</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Brand identity + thought leadership</div>
         </div>
       </div>
 
       <div class="quarter">
-        <h3>Q2 2026 &mdash; Ship &amp; Certify <span>(May &ndash; Jul)</span></h3>
+        <h3>Q2 2026 &mdash; Ship &amp; Sell <span>(May &ndash; Jul)</span></h3>
+        <div class="focus">Ship Secure K8s Core GA and SOC-in-a-Box alpha. Close first deals. Begin FedRAMP 20x preparation.</div>
         <div class="items">
-          <div class="item"><span class="tag tag-product">Product</span>Secure K8s Core GA</div>
-          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box alpha</div>
+          <div class="item"><span class="tag tag-product">Product</span>Secure K8s Core GA + community edition</div>
+          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box alpha (SIEM + EDR on K8s)</div>
           <div class="item"><span class="tag tag-product">Product</span>CYROID self-service pilot</div>
-          <div class="item"><span class="tag tag-product">Product</span>DevSecOps + DFIR bundles ship</div>
+          <div class="item"><span class="tag tag-product">Product</span>DevSecOps + DFIR deployment bundles</div>
           <div class="item"><span class="tag tag-training">Training</span>LMS launch + 2 more courses</div>
+          <div class="item"><span class="tag tag-training">Training</span>Certification program design (CCRO)</div>
           <div class="item"><span class="tag tag-business">Business</span>20 demos, 5 proposals, first deals</div>
-          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP Ready designation</div>
+          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP 20x Low preparation</div>
+          <div class="item"><span class="tag tag-business">Business</span>MSSP/integrator partner program launch</div>
           <div class="item"><span class="tag tag-ops">Ops</span>CRM, advertising, RFP workflow</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>Evaluate self-hosted vs. SaaS infra</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>Publish IaC reference architectures for SMBs</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>Evaluate self-hosted infra vs. SaaS</div>
         </div>
       </div>
 
       <div class="quarter">
         <h3>Q3 2026 &mdash; Scale <span>(Aug &ndash; Oct)</span></h3>
+        <div class="focus">SOC-in-a-Box beta at customer sites. Managed SOC tier operational. Target federal fiscal year-end spending.</div>
         <div class="items">
-          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box beta + managed tier</div>
+          <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box beta + managed SOC tier</div>
           <div class="item"><span class="tag tag-product">Product</span>CYROID marketplace (GovCloud)</div>
-          <div class="item"><span class="tag tag-product">Product</span>Platform convergence (unified mgmt)</div>
-          <div class="item"><span class="tag tag-product">Product</span>Full app bundle catalog</div>
-          <div class="item"><span class="tag tag-training">Training</span>Certification launch (CCRO)</div>
+          <div class="item"><span class="tag tag-product">Product</span>Platform convergence (unified mgmt, SSO)</div>
+          <div class="item"><span class="tag tag-product">Product</span>Full deployment bundle catalog</div>
+          <div class="item"><span class="tag tag-training">Training</span>CCRO certification launch</div>
           <div class="item"><span class="tag tag-business">Business</span>30 demos, $5M pipeline, 5+ customers</div>
-          <div class="item"><span class="tag tag-business">Business</span>2+ gov contracts + IL4/IL5 path</div>
+          <div class="item"><span class="tag tag-business">Business</span>2+ gov contracts (fed Q4 flush)</div>
+          <div class="item"><span class="tag tag-business">Business</span>2+ MSSP partners reselling</div>
           <div class="item"><span class="tag tag-ops">Ops</span>Support system, SLAs, runbooks</div>
           <div class="item"><span class="tag tag-ops">Ops</span>Self-hosted infra migration (if needed)</div>
           <div class="item"><span class="tag tag-ops">Ops</span>AI ops foundation: internal AI assistant</div>
@@ -562,16 +759,19 @@
 
       <div class="quarter">
         <h3>Q4 2026 &mdash; Compound <span>(Nov &ndash; Jan 2027)</span></h3>
+        <div class="focus">SOC-in-a-Box GA + SaaS tier. FedRAMP 20x in process. Recurring revenue &gt;40% of total. Plan 2027.</div>
         <div class="items">
           <div class="item"><span class="tag tag-product">Product</span>SOC-in-a-Box GA + SaaS tier</div>
-          <div class="item"><span class="tag tag-product">Product</span>CYROID AI adversary sim + federation</div>
-          <div class="item"><span class="tag tag-product">Product</span>K8s Core ecosystem + community edition</div>
-          <div class="item"><span class="tag tag-product">Product</span>Developer platform (APIs, SDKs)</div>
+          <div class="item"><span class="tag tag-product">Product</span>CYROID advanced: federation, AI scoring</div>
+          <div class="item"><span class="tag tag-product">Product</span>K8s Core ecosystem + air-gapped pkg</div>
+          <div class="item"><span class="tag tag-product">Product</span>Developer platform (APIs, SDKs, webhooks)</div>
           <div class="item"><span class="tag tag-training">Training</span>500+ students, 3+ certifications</div>
-          <div class="item"><span class="tag tag-business">Business</span>40 demos, $10M pipeline, 10+ customers</div>
-          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP Authorized</div>
-          <div class="item"><span class="tag tag-ops">Ops</span>2027 strategic planning, mature ops</div>
+          <div class="item"><span class="tag tag-business">Business</span>$750K&ndash;$1M ARR, 40%+ recurring</div>
+          <div class="item"><span class="tag tag-business">Business</span>$10M pipeline, 10+ customers</div>
+          <div class="item"><span class="tag tag-compliance">Compliance</span>FedRAMP 20x In Process</div>
+          <div class="item"><span class="tag tag-business">Business</span>Analyst briefings (Gartner, Forrester)</div>
           <div class="item"><span class="tag tag-ops">Ops</span>Self-hosted AI platform for business tasks</div>
+          <div class="item"><span class="tag tag-ops">Ops</span>2027 strategic planning</div>
         </div>
       </div>
     </div>
@@ -581,40 +781,65 @@
       <thead>
         <tr>
           <th>Risk</th>
+          <th>Likelihood</th>
           <th>Impact</th>
           <th>Mitigation</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>FedRAMP timeline slips</td>
-          <td><span class="badge badge-high">High</span> Blocks gov SaaS deals</td>
-          <td>Pursue agency ATOs in parallel; sell on-prem while waiting</td>
+          <td>FedRAMP timeline extends beyond 2027</td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td><span class="badge badge-high">High</span></td>
+          <td>Target FedRAMP 20x Low (faster, cheaper); pursue agency ATOs in parallel; sell on-prem while waiting</td>
         </tr>
         <tr>
           <td>SOC-in-a-Box scope creep</td>
-          <td><span class="badge badge-high">High</span> Delays GA</td>
-          <td>Strict MVP scope; ship core detection first, analytics later</td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td><span class="badge badge-high">High</span></td>
+          <td>Strict MVP: core detection first, advanced analytics in v2. Gate features on demand, not ambition</td>
         </tr>
         <tr>
           <td>Key person dependency</td>
-          <td><span class="badge badge-med">Med</span> Single points of failure</td>
-          <td>Document everything; cross-train; hire ahead of need</td>
+          <td><span class="badge badge-high">High</span></td>
+          <td><span class="badge badge-high">High</span></td>
+          <td>Document everything; cross-train; hire to eliminate single points of failure</td>
         </tr>
         <tr>
-          <td>Compliance cost overruns</td>
-          <td><span class="badge badge-med">Med</span> Cash drain</td>
-          <td>Budget 20% buffer; CMMC before FedRAMP</td>
+          <td>Gov sales cycle exceeds 18 months</td>
+          <td><span class="badge badge-high">High</span></td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td>Maintain training + consulting cashflow; pursue OTAs and set-aside contracts; target fed Q4 flush</td>
         </tr>
         <tr>
-          <td>Commercial market fit</td>
-          <td><span class="badge badge-med">Med</span> Gov platforms don't resonate</td>
-          <td>Validate with 3 commercial design partners first</td>
+          <td>SBIR/STTR reauthorization stalls</td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td>Do not depend on SBIR; fund all R&amp;D from revenue. Treat awards as acceleration, not survival</td>
         </tr>
         <tr>
-          <td>Ops overhead underestimated</td>
-          <td><span class="badge badge-med">Med</span> Team burns out on admin</td>
-          <td>Automate early; hire ops support; outsource bookkeeping</td>
+          <td>Commercial market fit uncertain</td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td>Validate with 3 design partners first. Price SOC at MDR rates ($15&ndash;25/endpoint/mo)</td>
+        </tr>
+        <tr>
+          <td>Compliance costs exceed budget</td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td>Budget 20% buffer; CMMC first (cheaper). FedRAMP 20x Low: $150K&ndash;$300K</td>
+        </tr>
+        <tr>
+          <td>Training revenue plateaus</td>
+          <td><span class="badge badge-low">Low</span></td>
+          <td><span class="badge badge-high">High</span></td>
+          <td>Diversify: certifications, LMS on-demand, enterprise contracts. Protect this revenue at all costs</td>
+        </tr>
+        <tr>
+          <td>Team burns out on ops overhead</td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td><span class="badge badge-med">Med</span></td>
+          <td>Automate early; outsource admin; defer non-essential projects. Focus is the discipline</td>
         </tr>
       </tbody>
     </table>
@@ -630,44 +855,77 @@
 
     const quarters = ['Q1 2026', 'Q2 2026', 'Q3 2026', 'Q4 2026'];
 
-    // Sales Pipeline Chart
-    new Chart(document.getElementById('pipelineChart'), {
+    // Revenue by Stream (stacked bar) + ARR line
+    // Shows quarterly revenue broken down by source so the CEO can see
+    // which streams are carrying the business at each stage.
+    // Q1 uses 0 as placeholder — CEO must enter actual baseline.
+    new Chart(document.getElementById('revenueChart'), {
       type: 'bar',
       data: {
         labels: quarters,
         datasets: [
           {
-            label: 'Gov Contracts (closed)',
-            data: [0, 1, 2, 3],
+            label: 'Training + Consulting ($K)',
+            data: [0, 125, 200, 250],
+            backgroundColor: 'rgba(248, 81, 73, 0.7)',
+            borderColor: '#f85149',
+            borderWidth: 1,
+            borderRadius: 2,
+            stack: 'revenue'
+          },
+          {
+            label: 'Platform Licenses ($K)',
+            data: [0, 150, 200, 250],
             backgroundColor: 'rgba(88, 166, 255, 0.7)',
             borderColor: '#58a6ff',
             borderWidth: 1,
-            borderRadius: 4
+            borderRadius: 2,
+            stack: 'revenue'
           },
           {
-            label: 'Commercial Customers (closed)',
-            data: [0, 2, 5, 10],
+            label: 'Managed / SaaS ($K)',
+            data: [0, 0, 50, 150],
             backgroundColor: 'rgba(63, 185, 80, 0.7)',
             borderColor: '#3fb950',
             borderWidth: 1,
-            borderRadius: 4
+            borderRadius: 2,
+            stack: 'revenue'
           },
           {
-            label: 'MSSP Partners',
-            data: [0, 0, 2, 5],
-            backgroundColor: 'rgba(188, 140, 255, 0.7)',
-            borderColor: '#bc8cff',
-            borderWidth: 1,
-            borderRadius: 4
+            label: 'Cumulative ARR ($K)',
+            data: [0, 250, 500, 875],
+            type: 'line',
+            borderColor: '#d29922',
+            backgroundColor: 'transparent',
+            tension: 0.3,
+            pointRadius: 6,
+            pointBackgroundColor: '#d29922',
+            borderWidth: 2,
+            stack: false
           }
         ]
       },
       options: {
         responsive: true,
-        plugins: { legend: { position: 'bottom' } },
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const v = ctx.raw;
+                return `${ctx.dataset.label}: $${v >= 1000 ? (v/1000).toFixed(1) + 'M' : v + 'K'}`;
+              }
+            }
+          }
+        },
         scales: {
           x: { grid: { color: '#21262d' } },
-          y: { grid: { color: '#21262d' }, beginAtZero: true }
+          y: {
+            stacked: true,
+            grid: { color: '#21262d' },
+            beginAtZero: true,
+            ticks: { callback: (v) => '$' + v + 'K' }
+          }
         }
       }
     });
@@ -699,8 +957,8 @@
             pointBackgroundColor: '#3fb950'
           },
           {
-            label: 'Prime Contractor Relationships',
-            data: [1, 2, 3, 5],
+            label: 'Closed Deals (Gov + Commercial)',
+            data: [0, 3, 7, 13],
             borderColor: '#d29922',
             backgroundColor: 'rgba(210, 153, 34, 0.1)',
             fill: true,
@@ -721,13 +979,14 @@
     });
 
     // Training Pipeline Chart
+    // Students Trained = cumulative YTD. Engagements = per quarter. Courses = point-in-time catalog.
     new Chart(document.getElementById('trainingChart'), {
       type: 'line',
       data: {
         labels: quarters,
         datasets: [
           {
-            label: 'Students Trained',
+            label: 'Students Trained (cumulative)',
             data: [50, 150, 300, 500],
             borderColor: '#f85149',
             backgroundColor: 'rgba(248, 81, 73, 0.1)',
@@ -737,7 +996,7 @@
             pointBackgroundColor: '#f85149'
           },
           {
-            label: 'Training Engagements',
+            label: 'Engagements (per quarter)',
             data: [2, 5, 10, 15],
             borderColor: '#d29922',
             backgroundColor: 'rgba(210, 153, 34, 0.1)',
@@ -772,12 +1031,12 @@
     new Chart(document.getElementById('productChart'), {
       type: 'bar',
       data: {
-        labels: ['Secure K8s Core', 'SOC-in-a-Box', 'CYROID', 'App Bundles'],
+        labels: ['Secure K8s Core', 'SOC-in-a-Box', 'CYROID'],
         datasets: [
-          { label: 'Q1', data: [25, 10, 60, 10], backgroundColor: 'rgba(88, 166, 255, 0.6)', borderRadius: 2 },
-          { label: 'Q2', data: [50, 20, 15, 25], backgroundColor: 'rgba(63, 185, 80, 0.6)', borderRadius: 2 },
-          { label: 'Q3', data: [15, 35, 15, 40], backgroundColor: 'rgba(210, 153, 34, 0.6)', borderRadius: 2 },
-          { label: 'Q4', data: [10, 35, 10, 25], backgroundColor: 'rgba(188, 140, 255, 0.6)', borderRadius: 2 }
+          { label: 'Q1', data: [30, 10, 60], backgroundColor: 'rgba(88, 166, 255, 0.6)', borderRadius: 2 },
+          { label: 'Q2', data: [45, 20, 15], backgroundColor: 'rgba(63, 185, 80, 0.6)', borderRadius: 2 },
+          { label: 'Q3', data: [15, 35, 15], backgroundColor: 'rgba(210, 153, 34, 0.6)', borderRadius: 2 },
+          { label: 'Q4', data: [10, 35, 10], backgroundColor: 'rgba(188, 140, 255, 0.6)', borderRadius: 2 }
         ]
       },
       options: {
@@ -800,7 +1059,7 @@
       data: {
         labels: ['Product', 'Training', 'Business', 'Operations', 'Compliance'],
         datasets: [{
-          data: [16, 8, 10, 8, 4],
+          data: [14, 7, 10, 6, 4],
           backgroundColor: [
             'rgba(88, 166, 255, 0.8)',
             'rgba(248, 81, 73, 0.8)',
